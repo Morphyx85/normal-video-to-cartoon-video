@@ -53,7 +53,7 @@ def trim(enter_start_time,enter_end_time,select_duration):
       cut_time_duration = end_time_in_second - start_time_in_second
       cut_time = str(datetime.timedelta(seconds=cut_time_duration))
       print("Trim video")
-      cut_command = f"ffmpeg -ss {enter_start_time} -i '{files[0]}' -t {cut_time} -c copy 'cut{dummy_extenstion}'"
+      cut_command = f"ffmpeg -hwaccel cuda -hwaccel_output_format cuda -ss {enter_start_time} -i '{files[0]}' -t {cut_time} -c copy 'cut{dummy_extenstion}'"
       print(cut_command)
       var7=os.system(cut_command)
       print(var7)
@@ -148,7 +148,7 @@ else:
    
 os.chdir("./cartoonized_images")
 #print(os.getcwd())
-var3=os.system(f"ffmpeg -framerate 30 -i %03d.{image_extenstion} cartoon{video_extenstion}")
+var3=os.system(f"ffmpeg -hwaccel cuda -hwaccel_output_format cuda -framerate 30 -i %03d.{image_extenstion} cartoon{video_extenstion}")
 if var3==0:
     print("We successfully make the cartoonized video.")
 else:
@@ -182,7 +182,7 @@ if var4==0:
     print("Successfully export audio")
 else:
     print("Failed to export audio")
-var5=os.system(f"ffmpeg -i cartoon{video_extenstion} -i audio.wav -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 cartoon_audio{video_extenstion}")
+var5=os.system(f"ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i cartoon{video_extenstion} -i audio.wav -c:v copy -c:a aac -map 0:v:0 -map 1:a:0 cartoon_audio{video_extenstion}")
 if var5==0:
     print("Successfully replace audio in output file")
 else:
