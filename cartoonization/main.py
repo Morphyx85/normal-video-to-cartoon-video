@@ -121,7 +121,7 @@ elif files[0].endswith(".mkv"):
    video_extenstion=".mkv"
    os.rename(files[0],"input_video.mkv")
 try:
-   var=os.system(f'ffmpeg -i "./input_video{video_extenstion}" "test_images/%03d.{image_extenstion}"')
+   var=os.system(f'ffmpeg -hwaccel cuda -i "./input_video{video_extenstion}" "test_images/%03d.{image_extenstion}"')
    if var==0:
       print("Frame extract successful")
    else:
